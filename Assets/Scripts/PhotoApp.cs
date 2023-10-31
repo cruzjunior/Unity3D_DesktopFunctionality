@@ -16,6 +16,10 @@ public class PhotoApp : MonoBehaviour
     /// The menu that is displayed when a photo is selected to edit
     /// </summary>
     private GameObject editMenu;
+    [SerializeField]
+    private GameObject displayImage;
+    [SerializeField]
+    private InputManager inputManager;
     /// <summary>
     /// The list of photos that can be edited and viewed
     /// </summary>
@@ -54,6 +58,9 @@ public class PhotoApp : MonoBehaviour
     /// </summary>
     private Texture2D outputTexture;
 
+    private Animator imgAnimator;
+    private bool isFullscreen = false;
+
     void OnEnable()
     {
         if(selectMenu == null || editMenu == null)
@@ -66,13 +73,35 @@ public class PhotoApp : MonoBehaviour
             editMenu.SetActive(false);
         }
 
-        // finds the display image component and sets it to the first photo in the list
-        photo = GameObject.Find("DisplayImage").GetComponent<Image>();
+        if(inputManager == null)
+            Debug.LogError("Input manager is null");
+        
+        if(displayImage == null)
+            Debug.LogError("Photo is null or does not have an animator component");
+        
+        imgAnimator = displayImage.GetComponent<Animator>();
+        photo = displayImage.GetComponent<Image>();
+
         photoIndex = 0;
         if(photos.Count == 0)
             Debug.LogError("No photos in list");
         else
             SetImage(photos[photoIndex]);
+    }
+    /// <summary>
+    /// Makes the photo fullscreen
+    /// </summary>
+     public void ViewPhoto()
+    {
+        imgAnimator.SetTrigger("FsEnter");
+        isFullscreen = true;
+    }
+    /// <summary>
+    /// Returns the photo to its original size
+    /// </summary>
+    public void ExitFullscreen()
+    {
+        imgAnimator.SetTrigger("FsExit");
     }
     /// <summary>
     /// Opens the edit menu and closes the select menu
@@ -81,7 +110,7 @@ public class PhotoApp : MonoBehaviour
     {
         selectMenu.SetActive(false);
         editMenu.SetActive(true);
-
+        imgAnimator.SetTrigger("EdtEnter");
         // finds the sliders and toggles and sets them to their respective variables
         brightnesSlider = GameObject.Find("BrightnesSlider").GetComponent<Slider>();
         contrastSlider = GameObject.Find("ContrastSlider").GetComponent<Slider>();
@@ -94,6 +123,7 @@ public class PhotoApp : MonoBehaviour
     /// </summary>
     public void CloseEditMenu()
     {
+        imgAnimator.SetTrigger("EdtExit");
         selectMenu.SetActive(true);
         editMenu.SetActive(false);
     }
@@ -294,5 +324,14 @@ public class PhotoApp : MonoBehaviour
     public void CloseApp()
     {
         gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if(inputManager.GetIsEscPressed() && isFullscreen)
+        {
+            isFullscreen = false;
+            ExitFullscreen();
+        }
     }
 }

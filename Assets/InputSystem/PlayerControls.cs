@@ -140,9 +140,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""887c4d77-3575-4593-9410-ea114a99661f"",
             ""actions"": [
                 {
-                    ""name"": ""Shortcuts"",
+                    ""name"": ""Escape"",
                     ""type"": ""Button"",
-                    ""id"": ""8d8b03fb-b46c-4079-9505-562a2d02deb3"",
+                    ""id"": ""5d587fcf-ae4a-44c8-b9b2-3b7d5e11eb21"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -151,134 +151,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""undo"",
-                    ""id"": ""6b83bd24-5eb3-404a-8339-ba3863e73a02"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""445ec4b6-b265-4be5-a64c-49cf342cc5d3"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""22dcc402-eb29-4d08-a4d7-88eb3f2322f9"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""redo"",
-                    ""id"": ""6a3363b5-2c05-4cd0-ace2-001b80a9b815"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""a6be171f-6a2d-44a8-b39d-ac1ba7b9444a"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""eedf616d-41dc-4191-bd04-f6a47f910f2a"",
-                    ""path"": ""<Keyboard>/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""redoAlt"",
-                    ""id"": ""d4941e71-c188-489d-af9b-ac768b0c57c5"",
-                    ""path"": ""TwoModifiers"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier1"",
-                    ""id"": ""a4566a45-cddf-4453-bbfd-324f3ac267e4"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""modifier2"",
-                    ""id"": ""f579ebb1-72fc-4954-adf9-983f6466666c"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""c3625e34-76d0-4e24-9c08-f7583731c024"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""23c46ab0-8ac2-4f00-ba46-2ef597f4f2e6"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": """",
                     ""id"": ""0fc18e4c-7677-41ac-a486-452919cf094c"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC_Keyboard_Mouse"",
-                    ""action"": ""Shortcuts"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24144ed7-c9bb-49a4-8c16-4e4302bc3c19"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -311,7 +201,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         // MonitorUI
         m_MonitorUI = asset.FindActionMap("MonitorUI", throwIfNotFound: true);
-        m_MonitorUI_Shortcuts = m_MonitorUI.FindAction("Shortcuts", throwIfNotFound: true);
+        m_MonitorUI_Escape = m_MonitorUI.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -435,12 +325,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // MonitorUI
     private readonly InputActionMap m_MonitorUI;
     private List<IMonitorUIActions> m_MonitorUIActionsCallbackInterfaces = new List<IMonitorUIActions>();
-    private readonly InputAction m_MonitorUI_Shortcuts;
+    private readonly InputAction m_MonitorUI_Escape;
     public struct MonitorUIActions
     {
         private @PlayerControls m_Wrapper;
         public MonitorUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Shortcuts => m_Wrapper.m_MonitorUI_Shortcuts;
+        public InputAction @Escape => m_Wrapper.m_MonitorUI_Escape;
         public InputActionMap Get() { return m_Wrapper.m_MonitorUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -450,16 +340,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MonitorUIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MonitorUIActionsCallbackInterfaces.Add(instance);
-            @Shortcuts.started += instance.OnShortcuts;
-            @Shortcuts.performed += instance.OnShortcuts;
-            @Shortcuts.canceled += instance.OnShortcuts;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         private void UnregisterCallbacks(IMonitorUIActions instance)
         {
-            @Shortcuts.started -= instance.OnShortcuts;
-            @Shortcuts.performed -= instance.OnShortcuts;
-            @Shortcuts.canceled -= instance.OnShortcuts;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         public void RemoveCallbacks(IMonitorUIActions instance)
@@ -494,6 +384,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public interface IMonitorUIActions
     {
-        void OnShortcuts(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

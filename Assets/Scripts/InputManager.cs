@@ -22,9 +22,9 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private InputActionMap playerMap;
     /// <summary>
-    /// The InputAction for the UI controls shortcuts
+    /// The InputActionMap for the UI controls shortcuts
     /// </summary>
-    private InputAction uiShortcut;
+    private InputActionMap uiShortcut;
     /// <summary>
     /// Whether the interact key is pressed
     /// </summary>
@@ -33,6 +33,8 @@ public class InputManager : MonoBehaviour
     /// Whether the player map is enabled
     /// </summary>
     private bool isPlayerMapEnabled = true;
+
+    private bool isEscPressed = false;
     
     void Awake()
     {
@@ -48,7 +50,7 @@ public class InputManager : MonoBehaviour
         movement = playerControls.Player.Move;
         look = playerControls.Player.Look;
         // assigns the UI shortcut InputAction
-        uiShortcut = playerControls.MonitorUI.Shortcuts;
+        uiShortcut = playerControls.MonitorUI;
         // binds the interact InputAction to bool
         playerControls.Player.Interact.performed += ctx => isInteractPressed = true;
         playerControls.Player.Interact.canceled += ctx => isInteractPressed = false;
@@ -108,6 +110,8 @@ public class InputManager : MonoBehaviour
     public void EnableUIShortcuts()
     {
         uiShortcut.Enable();
+        playerControls.MonitorUI.Escape.performed += ctx => isEscPressed = true;
+        playerControls.MonitorUI.Escape.canceled += ctx => isEscPressed = false;
     }
     /// <summary>
     /// Disables the UI shortcuts
@@ -115,5 +119,10 @@ public class InputManager : MonoBehaviour
     public void DisableUIShortcuts()
     {
         uiShortcut.Disable();
+    }
+
+    public bool GetIsEscPressed()
+    {
+        return isEscPressed;
     }
 }
