@@ -34,6 +34,10 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private bool isPlayerMapEnabled = true;
     /// <summary>
+    /// Whether the UI shortcuts are enabled
+    /// </summary>
+    private bool isUIShortcutMapEnabled = false;
+    /// <summary>
     /// Whether the escape key is pressed
     /// </summary>
     private bool isEscPressed = false;
@@ -107,11 +111,21 @@ public class InputManager : MonoBehaviour
         return isPlayerMapEnabled;
     }
     /// <summary>
+    /// Gets whether the UI shortcuts are enabled
+    /// </summary>
+    /// <returns> returns true if the UI shortcuts are enabled
+    /// </returns>
+    public bool GetIsUIShortcutMapEnabled()
+    {
+        return isUIShortcutMapEnabled;
+    }
+    /// <summary>
     /// Enables the UI shortcuts
     /// </summary>
     public void EnableUIShortcuts()
     {
         uiShortcut.Enable();
+        isUIShortcutMapEnabled = true;
         // binds the escape InputAction to bool
         playerControls.MonitorUI.Escape.performed += ctx => isEscPressed = true;
         playerControls.MonitorUI.Escape.canceled += ctx => isEscPressed = false;
@@ -122,6 +136,7 @@ public class InputManager : MonoBehaviour
     public void DisableUIShortcuts()
     {
         uiShortcut.Disable();
+        isUIShortcutMapEnabled = false;
     }
     /// <summary>
     /// Gets whether the escape key is pressed  

@@ -19,9 +19,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private GameObject cameraObject;
     /// <summary>
-    /// The rotation of the camera object
+    /// The rotation of the camera object in the x-axis
     /// </summary>
     private float xRot = 0f;
+    /// <summary>
+    /// The rotation of the player object in the y-axis
+    /// </summary>
+    float yRot = 0f;
     /// <summary>
     /// The direction the player is moving
     /// </summary>
@@ -74,15 +78,39 @@ public class PlayerController : MonoBehaviour
     private IEnumerator CameraAnim(Vector3 camStartPos, Vector3 camEndPos, Quaternion camStartRot, Quaternion playerStartRos)
     { 
         float normalizedTime = 0;
+        Vector3 target = new Vector3(0, 0, 0);
+        // If the player is entering the computer then set the target rotation to be 0, 0, 0
+        if(!inputManager.GetIsPlayerMapEnabled() && !inputManager.GetIsUIShortcutMapEnabled())
+        {
+            target = new Vector3(0, 0, 0);
+        }
+        // If the player is exiting the computer then set the target rotation to be the camera rotation
+        else if(!inputManager.GetIsPlayerMapEnabled())
+        {
+            target = new Vector3(xRot, yRot, 0);
+        }
+
         // Lerp the camera and player rotation and position while the normalized time is less than 1
         while (normalizedTime <= 1)
         {
             // Increment the normalized time based on the animation speed
             normalizedTime += Time.deltaTime/animSpeed;
             cameraObject.transform.position = Vector3.Lerp(camStartPos, camEndPos, normalizedTime);
-            cameraObject.transform.rotation = Quaternion.Lerp(camStartRot, Quaternion.Euler(0, 0, 0), normalizedTime);
-            transform.rotation = Quaternion.Lerp(playerStartRos, Quaternion.Euler(0, 0, 0), normalizedTime);
+            cameraObject.transform.rotation = Quaternion.Lerp(camStartRot, Quaternion.Euler(target.x, 0, 0), normalizedTime);
+            transform.rotation = Quaternion.Lerp(playerStartRos, Quaternion.Euler(0, target.y, 0), normalizedTime);
             yield return null;
+        }
+        // If the player is entering the computer then disable the player map and enable the UI shortcuts
+        if(!inputManager.GetIsPlayerMapEnabled() && !inputManager.GetIsUIShortcutMapEnabled())
+        {
+            inputManager.EnableUIShortcuts();
+        }
+        // If the player is exiting the computer then disable the UI shortcuts and enable the player map
+        else if(!inputManager.GetIsPlayerMapEnabled())
+        {
+            inputManager.DisableUIShortcuts();
+            inputManager.EnablePlayerMap();
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
@@ -97,17 +125,15 @@ public class PlayerController : MonoBehaviour
                 // Get the position of the camera Position inside the monitor
                 Vector3 monitorCamPos = hit.collider.gameObject.transform.GetChild(0).position;
                 cameraStartPos = cameraObject.transform.position;
-                // Disable the player movement controls and start the camera animation
                 inputManager.DisablePlayerMap();
-                StartCoroutine(CameraAnim(cameraStartPos, monitorCamPos, cameraObject.transform.rotation, transform.rotation));
                 // Unlock the cursor and enable the UI shortcuts
                 Cursor.lockState = CursorLockMode.None;
-                inputManager.EnableUIShortcuts();
+                StartCoroutine(CameraAnim(cameraStartPos, monitorCamPos, cameraObject.transform.rotation, transform.rotation));
             }
         }
 
         // Get the mouse movement
-        float yRot = inputManager.GetLook().x * mouseSensitivity * Time.fixedDeltaTime;
+        yRot = inputManager.GetLook().x * mouseSensitivity * Time.fixedDeltaTime;
         xRot -= inputManager.GetLook().y * mouseSensitivity * Time.fixedDeltaTime;
         // Clamp the camera rotation to prevent the player from looking too far up or down
         xRot = Mathf.Clamp(xRot, -90f, 90f);
@@ -139,8 +165,5 @@ public class PlayerController : MonoBehaviour
     public void ExitComputer()
     {
         StartCoroutine(CameraAnim(cameraObject.transform.position, cameraStartPos, cameraObject.transform.rotation, transform.rotation));
-        Cursor.lockState = CursorLockMode.Locked;
-        inputManager.DisableUIShortcuts();
-        inputManager.EnablePlayerMap();
     }
 }
