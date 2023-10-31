@@ -36,10 +36,6 @@ public class PhotoApp : MonoBehaviour
     /// </summary>
     [SerializeField] private List<Slider> sliders;
     /// <summary>
-    /// The list of input fields that control the brightnes and contrast of the photo
-    /// </summary>
-    [SerializeField] private List<TMP_InputField> inputFields;
-    /// <summary>
     /// The photo that is currently being edited or viewed
     /// </summary>
     private Image photo;
@@ -68,14 +64,6 @@ public class PhotoApp : MonoBehaviour
     /// </summary>
     private Toggle blueToggle;
     /// <summary>
-    /// The input field that controls the brightnes of the photo
-    /// </summary>
-    private TMP_InputField brightnessInputField;
-    /// <summary>
-    /// The input field that controls the contrast of the photo 
-    /// </summary>
-    private TMP_InputField contrastInputField;
-    /// <summary>
     /// The texture that is outputted after all adjustments are made
     /// </summary>
     private Texture2D outputTexture;
@@ -87,6 +75,7 @@ public class PhotoApp : MonoBehaviour
     /// Whether the photo is fullscreen or not
     /// </summary>
     private bool isFullscreen = false;
+    private bool isSaved = false;
 
     void OnEnable()
     {
@@ -156,19 +145,16 @@ public class PhotoApp : MonoBehaviour
             greenToggle = colorToggles[1];
             blueToggle = colorToggles[2];
         }
-
-        if(inputFields.Count != 2)
-            Debug.LogError("There are not 2 input fields in the list");
-        else{
-            brightnessInputField = inputFields[0];
-            contrastInputField = inputFields[1];
-        }
     }
     /// <summary>
     /// Closes the edit menu and opens the select menu
     /// </summary>
     public void CloseEditMenu()
     {
+        if(!isSaved)
+        {
+            SetImage(photos[photoIndex]);
+        }
         imgAnimator.SetTrigger("EdtExit");
         selectMenu.SetActive(true);
         editMenu.SetActive(false);
@@ -211,6 +197,7 @@ public class PhotoApp : MonoBehaviour
         photos.Add(outputTexture);
         photoIndex = photos.Count - 1;
         SetImage(photos[photoIndex]);
+        isSaved = true;
     }
     /// <summary>
     /// Saves the current photo over the current photo in the list
@@ -219,30 +206,13 @@ public class PhotoApp : MonoBehaviour
     {
         photos[photoIndex] = outputTexture;
         SetImage(photos[photoIndex]);
-    }
-    /// <summary>
-    /// Changes the brightness slider based on the input field
-    /// </summary>
-    public void BrightnessSliderChange()
-    {
-        brightnesSlider.value = float.Parse(brightnessInputField.text);
-        AdjustmentCall();
-    }
-    /// <summary>
-    /// Changes the contrast slider based on the input field
-    /// </summary>
-    public void ContrastSliderChange()
-    {
-        contrastSlider.value = float.Parse(contrastInputField.text);
-        AdjustmentCall();
+        isSaved = true;
     }
     /// <summary>
     /// Calls all of the adjustment functions
     /// </summary>
     public void AdjustmentCall()
     {   
-        brightnessInputField.text = brightnesSlider.value.ToString();
-        contrastInputField.text = contrastSlider.value.ToString();
         // sets the output texture to the current photo and then calls all of the adjustment functions
         outputTexture = photos[photoIndex];
         outputTexture = InvertColors(outputTexture);
