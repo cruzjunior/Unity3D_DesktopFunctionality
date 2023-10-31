@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
         // Move the player based on the movement input
         moveDir = inputManager.GetMovement();
-        Vector3 move = new Vector3(moveDir.x, 0f, moveDir.y);
+        Vector3 move = new Vector3(moveDir.x, -9.81f/moveSpeed, moveDir.y);
         characterController.Move(transform.TransformDirection(move) * moveSpeed * Time.fixedDeltaTime);
     }
 }
