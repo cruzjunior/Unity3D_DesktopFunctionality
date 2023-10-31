@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {   
@@ -36,6 +38,14 @@ public class PlayerController : MonoBehaviour
     /// The speed of the camera animation when entering and exiting a computer
     /// </summary>
     [SerializeField] private float animSpeed = 1.5f;
+    /// <summary>
+    /// The UI cursor object
+    /// </summary>
+    [SerializeField] private GameObject cursor;
+    /// <summary>
+    /// The canvas object
+    /// </summary>
+    [SerializeField] private Canvas myCanvas;
     /// <summary>
     /// The starting position of the camera when entering a computer
     /// </summary>
@@ -106,6 +116,16 @@ public class PlayerController : MonoBehaviour
         if(inputManager.GetIsPlayerMapEnabled()){
             transform.Rotate(Vector3.up * yRot);
             cameraObject.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
+        }
+        else{
+            Vector3 mousePos = Input.mousePosition;
+            // Convert the mouse position to a position on the canvas
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(myCanvas.transform as RectTransform, mousePos, myCanvas.worldCamera, out Vector2 pos);
+            // Clamp the cursor position to the canvas
+            pos.x = Mathf.Clamp(pos.x + 10f, -myCanvas.GetComponent<RectTransform>().rect.width/2, myCanvas.GetComponent<RectTransform>().rect.width/2);
+            pos.y = Mathf.Clamp(pos.y - 10f, -myCanvas.GetComponent<RectTransform>().rect.height/2, myCanvas.GetComponent<RectTransform>().rect.height/2);
+            // Set the cursor position to the clamp position
+            cursor.transform.position = myCanvas.transform.TransformPoint(pos);
         }
 
         // Move the player based on the movement input
