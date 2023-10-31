@@ -33,7 +33,6 @@ public class InputManager : MonoBehaviour
     /// Whether the player map is enabled
     /// </summary>
     private bool isPlayerMapEnabled = true;
-        
     
     void Awake()
     {
