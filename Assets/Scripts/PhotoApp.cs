@@ -106,7 +106,9 @@ public class PhotoApp : MonoBehaviour
         else
             SetImage(photos[photoIndex]);
 
+        // plays the animation for opening the app
         GetComponent<Animator>().SetTrigger("OpenApp");
+        imgAnimator.SetTrigger("Open");
     }
     /// <summary>
     /// Makes the photo fullscreen through an animation
