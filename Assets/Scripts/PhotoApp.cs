@@ -130,20 +130,25 @@ public class PhotoApp : MonoBehaviour
         editMenu.SetActive(true);
         imgAnimator.SetTrigger("EdtEnter");
 
-        // finds the sliders and toggles and sets them to their respective variables
+        // finds the sliders and toggles and sets them to their respective variables and sets their default values
         if(sliders.Count != 2)
             Debug.LogError("There are not 2 sliders in the list");
         else{
             brightnesSlider = sliders[0];
             contrastSlider = sliders[1];
+            brightnesSlider.value = 0;
+            contrastSlider.value = 1;
         }
 
         if(colorToggles.Count != 3)
             Debug.LogError("There are not 3 color toggles in the list");
         else{
             redToggle = colorToggles[0];
+            redToggle.isOn = false;
             greenToggle = colorToggles[1];
+            greenToggle.isOn = false;
             blueToggle = colorToggles[2];
+            blueToggle.isOn = false;
         }
     }
     /// <summary>
