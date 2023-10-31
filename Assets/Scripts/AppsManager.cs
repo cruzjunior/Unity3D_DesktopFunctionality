@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class AppsManager : MonoBehaviour
 {
-    [SerializeField]
-    private List<GameObject> apps;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    /// <summary>
+    /// The list of apps in the computer
+    /// </summary>
+    [SerializeField] private List<GameObject> apps;
 
     // Update is called once per frame
     public void OpenApp(string appName)

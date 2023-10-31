@@ -1,30 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
 public class PhotoApp : MonoBehaviour
 {
-    [SerializeField]
     /// <summary>
     /// The menu that is displayed when the app is first opened
     /// </summary>
-    private GameObject selectMenu;
-    [SerializeField]
+    [SerializeField] private GameObject selectMenu;
     /// <summary>
     /// The menu that is displayed when a photo is selected to edit
     /// </summary>
-    private GameObject editMenu;
-    [SerializeField]
-    private GameObject displayImage;
-    [SerializeField]
-    private InputManager inputManager;
+    [SerializeField] private GameObject editMenu;
+    /// <summary>
+    /// The image that displays the photo
+    /// </summary>
+    [SerializeField] private GameObject displayImage;
+    /// <summary>
+    /// The input manager script attached to the player
+    /// </summary>
+    [SerializeField] private InputManager inputManager;
     /// <summary>
     /// The list of photos that can be edited and viewed
     /// </summary>
-    [SerializeField]
-    private List<Texture2D> photos;
+    [SerializeField] private List<Texture2D> photos;
+    /// <summary>
+    /// The list of color toggles that control the color of the photo
+    /// </summary>
+    [SerializeField] private List<Toggle> colorToggles;
+    /// <summary>
+    /// The list of sliders that control the brightnes and contrast of the photo
+    /// </summary>
+    [SerializeField] private List<Slider> sliders;
+    /// <summary>
+    /// The list of input fields that control the brightnes and contrast of the photo
+    /// </summary>
+    [SerializeField] private List<TMP_InputField> inputFields;
     /// <summary>
     /// The photo that is currently being edited or viewed
     /// </summary>
@@ -54,15 +68,29 @@ public class PhotoApp : MonoBehaviour
     /// </summary>
     private Toggle blueToggle;
     /// <summary>
+    /// The input field that controls the brightnes of the photo
+    /// </summary>
+    private TMP_InputField brightnessInputField;
+    /// <summary>
+    /// The input field that controls the contrast of the photo 
+    /// </summary>
+    private TMP_InputField contrastInputField;
+    /// <summary>
     /// The texture that is outputted after all adjustments are made
     /// </summary>
     private Texture2D outputTexture;
-
+    /// <summary>
+    /// The animator component of the photo
+    /// </summary>
     private Animator imgAnimator;
+    /// <summary>
+    /// Whether the photo is fullscreen or not
+    /// </summary>
     private bool isFullscreen = false;
 
     void OnEnable()
     {
+        // Checks if the select menu or edit menu is null
         if(selectMenu == null || editMenu == null)
         {
             Debug.LogError("One of the menu variables is null");
@@ -72,16 +100,17 @@ public class PhotoApp : MonoBehaviour
             selectMenu.SetActive(true);
             editMenu.SetActive(false);
         }
-
+        // Checks if the input manager or photo is null
         if(inputManager == null)
             Debug.LogError("Input manager is null");
-        
+
+        // Checks if the display image is null or does not have an animator component
         if(displayImage == null)
             Debug.LogError("Photo is null or does not have an animator component");
         
         imgAnimator = displayImage.GetComponent<Animator>();
         photo = displayImage.GetComponent<Image>();
-
+        // Checks if the photo is null if not then sets the photo to the first photo in the list
         photoIndex = 0;
         if(photos.Count == 0)
             Debug.LogError("No photos in list");
@@ -89,7 +118,7 @@ public class PhotoApp : MonoBehaviour
             SetImage(photos[photoIndex]);
     }
     /// <summary>
-    /// Makes the photo fullscreen
+    /// Makes the photo fullscreen through an animation
     /// </summary>
      public void ViewPhoto()
     {
@@ -97,7 +126,7 @@ public class PhotoApp : MonoBehaviour
         isFullscreen = true;
     }
     /// <summary>
-    /// Returns the photo to its original size
+    /// Returns the photo to its original size through an animation
     /// </summary>
     public void ExitFullscreen()
     {
@@ -111,12 +140,29 @@ public class PhotoApp : MonoBehaviour
         selectMenu.SetActive(false);
         editMenu.SetActive(true);
         imgAnimator.SetTrigger("EdtEnter");
+
         // finds the sliders and toggles and sets them to their respective variables
-        brightnesSlider = GameObject.Find("BrightnesSlider").GetComponent<Slider>();
-        contrastSlider = GameObject.Find("ContrastSlider").GetComponent<Slider>();
-        redToggle = GameObject.Find("RedToggle").GetComponent<Toggle>();
-        greenToggle = GameObject.Find("GreenToggle").GetComponent<Toggle>();
-        blueToggle = GameObject.Find("BlueToggle").GetComponent<Toggle>();
+        if(sliders.Count != 2)
+            Debug.LogError("There are not 2 sliders in the list");
+        else{
+            brightnesSlider = sliders[0];
+            contrastSlider = sliders[1];
+        }
+
+        if(colorToggles.Count != 3)
+            Debug.LogError("There are not 3 color toggles in the list");
+        else{
+            redToggle = colorToggles[0];
+            greenToggle = colorToggles[1];
+            blueToggle = colorToggles[2];
+        }
+
+        if(inputFields.Count != 2)
+            Debug.LogError("There are not 2 input fields in the list");
+        else{
+            brightnessInputField = inputFields[0];
+            contrastInputField = inputFields[1];
+        }
     }
     /// <summary>
     /// Closes the edit menu and opens the select menu
@@ -174,12 +220,30 @@ public class PhotoApp : MonoBehaviour
         photos[photoIndex] = outputTexture;
         SetImage(photos[photoIndex]);
     }
-
+    /// <summary>
+    /// Changes the brightness slider based on the input field
+    /// </summary>
+    public void BrightnessSliderChange()
+    {
+        brightnesSlider.value = float.Parse(brightnessInputField.text);
+        AdjustmentCall();
+    }
+    /// <summary>
+    /// Changes the contrast slider based on the input field
+    /// </summary>
+    public void ContrastSliderChange()
+    {
+        contrastSlider.value = float.Parse(contrastInputField.text);
+        AdjustmentCall();
+    }
     /// <summary>
     /// Calls all of the adjustment functions
     /// </summary>
     public void AdjustmentCall()
-    {
+    {   
+        brightnessInputField.text = brightnesSlider.value.ToString();
+        contrastInputField.text = contrastSlider.value.ToString();
+        // sets the output texture to the current photo and then calls all of the adjustment functions
         outputTexture = photos[photoIndex];
         outputTexture = InvertColors(outputTexture);
         outputTexture = SetBrightnes(outputTexture);
@@ -327,7 +391,8 @@ public class PhotoApp : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
+        // Checks if the escape key is pressed and if the photo is fullscreen and if so exits fullscreen
         if(inputManager.GetIsEscPressed() && isFullscreen)
         {
             isFullscreen = false;

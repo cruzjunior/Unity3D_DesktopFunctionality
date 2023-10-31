@@ -27,18 +27,15 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// The speed the player moves at
     /// </summary>
-    [SerializeField]
-    private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
     /// <summary>
     /// The sensitivity of the mouse
     /// </summary>
-    [SerializeField]
-    private float mouseSensitivity = 20f;
+    [SerializeField] private float mouseSensitivity = 20f;
     /// <summary>
     /// The speed of the camera animation when entering and exiting a computer
     /// </summary>
-    [SerializeField]
-    private float animSpeed = 1.5f;
+    [SerializeField] private float animSpeed = 1.5f;
     /// <summary>
     /// The starting position of the camera when entering a computer
     /// </summary>

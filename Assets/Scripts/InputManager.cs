@@ -33,7 +33,9 @@ public class InputManager : MonoBehaviour
     /// Whether the player map is enabled
     /// </summary>
     private bool isPlayerMapEnabled = true;
-
+    /// <summary>
+    /// Whether the escape key is pressed
+    /// </summary>
     private bool isEscPressed = false;
     
     void Awake()
@@ -110,6 +112,7 @@ public class InputManager : MonoBehaviour
     public void EnableUIShortcuts()
     {
         uiShortcut.Enable();
+        // binds the escape InputAction to bool
         playerControls.MonitorUI.Escape.performed += ctx => isEscPressed = true;
         playerControls.MonitorUI.Escape.canceled += ctx => isEscPressed = false;
     }
@@ -120,7 +123,11 @@ public class InputManager : MonoBehaviour
     {
         uiShortcut.Disable();
     }
-
+    /// <summary>
+    /// Gets whether the escape key is pressed  
+    /// </summary>
+    /// <returns> returns true if the escape key is pressed
+    /// </returns>
     public bool GetIsEscPressed()
     {
         return isEscPressed;
