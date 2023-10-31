@@ -25,8 +25,15 @@ public class InputManager : MonoBehaviour
     /// The InputAction for the UI controls shortcuts
     /// </summary>
     private InputAction uiShortcut;
-
+    /// <summary>
+    /// Whether the interact key is pressed
+    /// </summary>
     private bool isInteractPressed = false;
+    /// <summary>
+    /// Whether the player map is enabled
+    /// </summary>
+    private bool isPlayerMapEnabled = true;
+        
     
     void Awake()
     {
@@ -63,16 +70,51 @@ public class InputManager : MonoBehaviour
     {
         return look.ReadValue<Vector2>();
     }
-
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Gets whether the interact key is pressed
+    /// </summary>
+    /// <returns></returns>
+    public bool GetIsInteractPressed()
     {
-        
+        return isInteractPressed;
     }
-
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Disables the player map
+    /// </summary>
+    public void DisablePlayerMap()
     {
-        
+        playerMap.Disable();
+        isPlayerMapEnabled = false;
+    }
+    /// <summary>
+    /// Enables the player map
+    /// </summary>
+    public void EnablePlayerMap()
+    {
+        playerMap.Enable();
+        isPlayerMapEnabled = true;
+    }
+    /// <summary>
+    /// Gets whether the player map is enabled
+    /// </summary>
+    /// <returns> returns true if the player map is enabled
+    /// </returns>
+    public bool GetIsPlayerMapEnabled()
+    {
+        return isPlayerMapEnabled;
+    }
+    /// <summary>
+    /// Enables the UI shortcuts
+    /// </summary>
+    public void EnableUIShortcuts()
+    {
+        uiShortcut.Enable();
+    }
+    /// <summary>
+    /// Disables the UI shortcuts
+    /// </summary>
+    public void DisableUIShortcuts()
+    {
+        uiShortcut.Disable();
     }
 }
