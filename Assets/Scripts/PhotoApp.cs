@@ -105,6 +105,8 @@ public class PhotoApp : MonoBehaviour
             Debug.LogError("No photos in list");
         else
             SetImage(photos[photoIndex]);
+
+        GetComponent<Animator>().SetTrigger("OpenApp");
     }
     /// <summary>
     /// Makes the photo fullscreen through an animation
