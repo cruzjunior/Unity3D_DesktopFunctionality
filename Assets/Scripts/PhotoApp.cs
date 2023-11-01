@@ -75,6 +75,9 @@ public class PhotoApp : MonoBehaviour
     /// Whether the photo is fullscreen or not
     /// </summary>
     private bool isFullscreen = false;
+    /// <summary>
+    /// Whether the photo has been saved or not
+    /// </summary>
     private bool isSaved = false;
 
     void OnEnable()
@@ -143,7 +146,7 @@ public class PhotoApp : MonoBehaviour
             brightnesSlider.value = 0;
             contrastSlider.value = 1;
         }
-
+        // Checks if the color toggles list has 3 toggles and sets them to their respective variables and sets their default values
         if(colorToggles.Count != 3)
             Debug.LogError("There are not 3 color toggles in the list");
         else{

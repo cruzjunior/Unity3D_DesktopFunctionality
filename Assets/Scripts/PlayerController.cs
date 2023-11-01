@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator CameraAnim(Vector3 camStartPos, Vector3 camEndPos, Quaternion camStartRot, Quaternion playerStartRos)
     { 
-        float normalizedTime = 0;
         Vector3 target = new Vector3(0, 0, 0);
         // If the player is entering the computer then set the target rotation to be 0, 0, 0
         if(!inputManager.GetIsPlayerMapEnabled() && !inputManager.GetIsUIShortcutMapEnabled())
@@ -89,7 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             target = new Vector3(xRot, yRot, 0);
         }
-
+        float normalizedTime = 0;
         // Lerp the camera and player rotation and position while the normalized time is less than 1
         while (normalizedTime <= 1)
         {
